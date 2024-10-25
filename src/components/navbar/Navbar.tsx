@@ -43,6 +43,7 @@ import Image from "next/image";
 
 type NavItemType = { name: string; href: string; icon?: React.ReactNode };
 
+// Main navigation items
 const mainNavItems: NavItemType[] = [
   { name: "About", href: "/#about", icon: <Info /> },
   { name: "Education", href: "/#education", icon: <BookOpen /> },
@@ -51,6 +52,7 @@ const mainNavItems: NavItemType[] = [
   { name: "Contact", href: "/#contact", icon: <MessageSquare /> },
 ];
 
+// Additional navigation items for the dropdown
 const moreNavItems: NavItemType[] = [
   { name: "Blog", href: "/#blog", icon: <FileText /> },
   { name: "Certifications", href: "/#certifications", icon: <Award /> },
@@ -58,6 +60,7 @@ const moreNavItems: NavItemType[] = [
   { name: "FAQ", href: "/#faq", icon: <HelpCircle /> },
 ];
 
+// Motion settings for animation
 const motionSettings = {
   initial: { opacity: 0, y: -50 },
   animate: { opacity: 1, y: 0 },
@@ -70,6 +73,7 @@ export default function Component() {
   const { setTheme, theme = "dark" } = useTheme();
   const { scrollY } = useScroll();
 
+  // Listen for scroll changes (currently unused)
   useMotionValueEvent(scrollY, "change", () => {});
 
   return (
@@ -84,12 +88,14 @@ export default function Component() {
           <AnimatedTitle />
         </Link>
 
+        {/* Desktop Navigation */}
         <div className="hidden xl:flex space-x-8 items-center">
           {renderNavItems(mainNavItems, pathname, theme, setIsOpen)}
           <ExploreMoreDropdown setIsOpen={setIsOpen} />
           <ThemeToggleButton theme={theme} setTheme={setTheme} />
         </div>
 
+        {/* Mobile Navigation */}
         <div className="flex items-center space-x-8 xl:hidden">
           <ThemeToggleButton theme={theme} setTheme={setTheme} />
           <MobileMenu
@@ -104,6 +110,7 @@ export default function Component() {
   );
 }
 
+// Animated Logo component
 const AnimatedLogo = () => (
   <motion.div
     initial={{ opacity: 0, rotate: -180, scale: 0.5 }}
@@ -122,6 +129,7 @@ const AnimatedLogo = () => (
   </motion.div>
 );
 
+// Animated Title component
 const AnimatedTitle = () => (
   <motion.span
     initial={{ opacity: 0, x: -20 }}
@@ -146,6 +154,7 @@ const AnimatedTitle = () => (
   </motion.span>
 );
 
+// Dropdown component for additional navigation items
 const ExploreMoreDropdown: React.FC<{
   setIsOpen: (state: boolean) => void;
 }> = ({ setIsOpen }) => (
@@ -166,6 +175,7 @@ const ExploreMoreDropdown: React.FC<{
   </DropdownMenu>
 );
 
+// Function to render navigation items
 const renderNavItems = (
   items: NavItemType[],
   pathname: string,
@@ -183,6 +193,7 @@ const renderNavItems = (
     />
   ));
 
+// Button to toggle theme
 const ThemeToggleButton: React.FC<{
   theme: string;
   setTheme: (theme: string) => void;
@@ -218,6 +229,7 @@ const ThemeToggleButton: React.FC<{
   </motion.div>
 );
 
+// Mobile Menu component
 const MobileMenu: React.FC<{
   isOpen: boolean;
   setIsOpen: (state: boolean) => void;
@@ -265,6 +277,7 @@ const MobileMenu: React.FC<{
   );
 };
 
+// Individual navigation item component
 const NavItem: React.FC<{
   item: NavItemType;
   index: number;
@@ -274,7 +287,7 @@ const NavItem: React.FC<{
 }> = ({ item, setIsOpen }) => {
   const handleClick = () => {
     if (setIsOpen) {
-      setIsOpen(false); 
+      setIsOpen(false); // Close mobile menu on item click
     }
   };
 
@@ -284,7 +297,7 @@ const NavItem: React.FC<{
         href={item.href}
         aria-label={item.name}
         className="flex items-center space-x-4 px-4 py-2 font-medium transition-all duration-300 group"
-        onClick={handleClick} 
+        onClick={handleClick} // Handle menu close on link click
       >
         {item.icon && (
           <motion.span

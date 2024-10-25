@@ -18,7 +18,7 @@ interface SocialMediaLink {
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
   labelName: string;
-  hoverColor: string; // Add hoverColor property
+  hoverColor: string; 
 }
 
 const data: SocialMediaLink[] = [
@@ -55,7 +55,7 @@ const data: SocialMediaLink[] = [
     link: "https://github.com/Shwetaank",
     icon: Github,
     labelName: "GitHub",
-    hoverColor: "#171515", // GitHub black
+    hoverColor: "#f89f1b",
   },
   {
     id: 6,

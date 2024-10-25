@@ -1,36 +1,36 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Download,
   Award,
   Briefcase,
-  GraduationCap,
-  Code,
-  Rocket,
-  Server,
-  ChevronDown,
-  ChevronUp,
+  User,
+  Github,
+  Linkedin,
+  Twitter,
+  Facebook,
+  Youtube,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
-const aboutData = [
+interface AboutData {
+  id: number;
+  icon: JSX.Element;
+  title: string;
+  desc: string;
+}
+
+interface SocialLink {
+  icon: JSX.Element;
+  href: string;
+  label: string;
+}
+
+const aboutData: AboutData[] = [
   {
     id: 1,
     icon: <Award className="h-6 w-6" />,
@@ -45,236 +45,147 @@ const aboutData = [
   },
   {
     id: 3,
-    icon: <GraduationCap className="h-6 w-6" />,
-    title: "Education",
-    desc: "B.Tech Mechanical",
+    icon: <User className="h-6 w-6" />,
+    title: "Clients",
+    desc: "10+ Happy",
   },
 ];
 
-const skills = [
+const socialLinks: SocialLink[] = [
   {
-    name: "React",
-    icon: <Code className="h-4 w-4" />,
-    color: "bg-blue-500",
-    level: 90,
+    icon: <Github className="h-7 w-7" />,
+    href: "https://github.com/Shwetaank",
+    label: "GitHub",
   },
   {
-    name: "Node.js",
-    icon: <Server className="h-4 w-4" />,
-    color: "bg-green-500",
-    level: 85,
+    icon: <Linkedin className="h-7 w-7" />,
+    href: "https://www.linkedin.com/in/shwetank-morey-a35484257",
+    label: "LinkedIn",
   },
   {
-    name: "Full Stack",
-    icon: <Rocket className="h-4 w-4" />,
-    color: "bg-purple-500",
-    level: 88,
+    icon: <Twitter className="h-7 w-7" />,
+    href: "https://x.com/Sin_Greed___",
+    label: "Twitter",
+  },
+  {
+    icon: <Facebook className="h-7 w-7" />,
+    href: "https://www.facebook.com/spmorey",
+    label: "Facebook",
+  },
+  {
+    icon: <Youtube className="h-7 w-7" />,
+    href: "https://www.youtube.com/@Sin_Greed",
+    label: "YouTube",
   },
 ];
 
-const AboutMeSection: React.FC = () => {
-  const [expandedSkill, setExpandedSkill] = useState<string | null>(null);
+const AboutSection: React.FC = () => {
+  // text
+  const text: string = `Hello, I'm Shwetank Morey 👋, a committed Full Stack Engineer 💻 based in Pune, India. With a background in Mechanical Engineering ⚙️, I have transitioned into freelancing, where I blend creativity with advanced technology solutions. My dedication to enhancing your online business presence is a priority 🌟, and I strive to add significant value to every project I undertake. For a comprehensive overview of my qualifications and experience, please explore my resume below 📄.`;
 
   return (
-    <section className="reletive py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+    <section className="py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div className=" mx-auto relative">
+        <motion.h2
+          initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-5xl md:text-7xl font-semibold bg-clip-text text-transparent 
+          bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 mb-10 mt-5 tracking-tight text-center"
         >
-          <h2 className="text-4xl font-bold text-primary mb-4">About Me</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Empowering digital visions with a touch of magic ✨
-          </p>
-        </motion.div>
+          ⭐ About Me ⭐
+        </motion.h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {/* Profile Image */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Profile Card */}
           <motion.div
-            className="col-span-1 md:col-span-2 lg:col-span-2 row-span-2"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="md:col-span-2 bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden transform rotate-1"
           >
-            <Card className="h-full overflow-hidden group">
-              <CardContent className="p-0 h-full">
-                <div className="relative w-full h-full">
-                  <Image
-                    src="/logo.jpg?height=400&width=600"
-                    alt="Shwetank Morey"
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    style={{ objectFit: "cover" }}
-                    className="transition-transform duration-300 group-hover:scale-110"
-                  />
-
-                  <div className="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <p className="text-white text-2xl font-bold">
-                      Shwetank Morey
-                    </p>
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-2/5 relative h-80 md:h-auto overflow-hidden">
+                <Image
+                  src="/about.jpg?height=400&width=400"
+                  alt="Shwetank Morey"
+                  layout="fill"
+                  objectFit="fill"
+                  className="transition-all duration-300 hover:scale-110"
+                />
+              </div>
+              <div className="p-8 md:w-3/5 flex flex-col justify-between bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700">
+                <div>
+                  <h3 className="text-2xl font-semibold text-center bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 mb-4">
+                    Full Stack Developer
+                  </h3>
+                  <div className="text-justify">
+                    <TextGenerateEffect words={text} />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex justify-center space-x-10 mt-6">
+                  {socialLinks.map((link, index) => (
+                    <motion.a
+                      key={index}
+                      href={link.href}
+                      className="flex items-center justify-center w-12 h-12 rounded-full bg-secondary text-primary hover:text-pink-500 shadow-xl transform transition-all duration-300 ease-in-out hover:-translate-y-2 hover:scale-110"
+                      aria-label={link.label}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      whileHover={{ rotate: 15, scale: 1.5 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      {link.icon}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Introduction */}
+          {/* Download CV Card */}
           <motion.div
-            className="col-span-1 md:col-span-1 lg:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl shadow-xl p-8 flex items-center justify-center transform -rotate-2"
           >
-            <Card className="h-full">
-              <CardHeader>
-                <CardTitle>Full Stack Engineer & Freelancer</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Greetings! I&apos;m a passionate Full Stack Engineer based in
-                  Pune, India. With a unique background in Mechanical
-                  Engineering, I&apos;ve embarked on an exciting journey in the
-                  world of web development, blending creativity with
-                  cutting-edge technology to deliver exceptional digital
-                  solutions.
-                </p>
-              </CardContent>
-            </Card>
+            <motion.div whileHover={{ scale: 1.15 }} whileTap={{ scale: 0.95 }}>
+              <a href="/my-cv.pdf" download>
+                <Button className="bg-white text-purple-600 hover:bg-gray-100 transition-colors py-4 px-10 rounded-full font-bold text-2xl flex items-center space-x-3 shadow-lg">
+                  <span className="text-lg">Download CV</span>
+                  <Download className="h-7 w-7" />
+                </Button>
+              </a>
+            </motion.div>
           </motion.div>
 
-          {/* Skills */}
-          <motion.div
-            className="col-span-1 md:col-span-3 lg:col-span-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <Card className="h-full">
-              <CardHeader>
-                <CardTitle>Skills</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-4">
-                {skills.map((skill, index) => (
-                  <TooltipProvider key={index}>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() =>
-                            setExpandedSkill(
-                              expandedSkill === skill.name ? null : skill.name
-                            )
-                          }
-                        >
-                          <Badge
-                            variant="secondary"
-                            className={`${skill.color} text-white cursor-pointer p-2`}
-                          >
-                            {skill.icon}
-                            <span className="ml-2">{skill.name}</span>
-                            {expandedSkill === skill.name ? (
-                              <ChevronUp className="ml-2 h-4 w-4" />
-                            ) : (
-                              <ChevronDown className="ml-2 h-4 w-4" />
-                            )}
-                          </Badge>
-                        </motion.div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Click to see more details</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
-              </CardContent>
-              <AnimatePresence>
-                {expandedSkill && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <CardContent>
-                      <p className="text-muted-foreground mb-2">
-                        Proficiency in {expandedSkill}
-                      </p>
-                      <div className="w-full bg-secondary h-2 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-primary"
-                          initial={{ width: 0 }}
-                          animate={{
-                            width: `${
-                              skills.find((s) => s.name === expandedSkill)
-                                ?.level
-                            }%`,
-                          }}
-                          transition={{ duration: 0.5, delay: 0.1 }}
-                        />
-                      </div>
-                    </CardContent>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Card>
-          </motion.div>
-
-          {/* Stats */}
+          {/* Stats Cards */}
           {aboutData.map((item, index) => (
             <motion.div
               key={item.id}
-              className="col-span-1"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+              className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700 rounded-3xl shadow-xl p-6 flex flex-col items-center justify-center transform hover:rotate-3 transition-transform"
             >
-              <Card className="h-full">
-                <CardContent className="flex flex-col items-center justify-center h-full p-6">
-                  <motion.div
-                    whileHover={{ scale: 1.1, rotate: 360 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="text-primary mb-2"
-                  >
-                    {item.icon}
-                  </motion.div>
-                  <CardTitle className="text-lg mb-1">{item.title}</CardTitle>
-                  <CardDescription className="text-center">
-                    {item.desc}
-                  </CardDescription>
-                </CardContent>
-              </Card>
+              <motion.div
+                className="text-pink-500 dark:text-pink-300 mb-4"
+                whileHover={{ scale: 1.2, rotate: 360 }}
+                transition={{ type: "spring", stiffness: 300, damping: 10 }}
+              >
+                {item.icon}
+              </motion.div>
+              <h3 className="text-lg font-bold text-purple-600 dark:text-purple-300 mb-1">
+                {item.title}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">{item.desc}</p>
             </motion.div>
           ))}
-
-          {/* Download CV */}
-          <motion.div
-            className="col-span-1 md:col-span-3 lg:col-span-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
-          >
-            <Card>
-              <CardContent className="flex items-center justify-center p-6">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto"
-                >
-                  <Button className="w-full sm:w-auto text-lg py-6 px-8">
-                    Download CV <Download className="ml-2 h-5 w-5" />
-                  </Button>
-                </motion.div>
-              </CardContent>
-            </Card>
-          </motion.div>
         </div>
       </div>
     </section>
   );
 };
 
-export default AboutMeSection;
+export default AboutSection;
